@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  	<crontab>
+        <jobs>
+            <delightexport_apply_all>
+                <schedule><cron_expr>* * * * *</cron_expr></schedule>
+                <run><model>delightexport/writer::createAllFiles</model></run>
+            </delightexport_apply_all>
+        </jobs>
+    </crontab>
+	<modules>
+		<Delight_Delightexport>
+			<version>0.0.2</version>
+		</Delight_Delightexport>
+	</modules>
+	<global>
+		<models>
+			<delightexport>
+				<class>Delight_Delightexport_Model</class>
+				<resourceModel>delightexport_mysql4</resourceModel>
+			</delightexport>
+			<delightexport_mysql4>
+				<class>Delight_Delightexport_Model_Mysql4</class>
+				<entities>
+					<files>
+						<table>delightexport_files</table>
+					</files>
+					<config>
+						<table>delightexport_config</table>
+					</config>
+				</entities>
+			</delightexport_mysql4>
+		</models>
+		<helpers>
+			<delightexport>
+				<class>Delight_Delightexport_Helper</class>
+			</delightexport>
+		</helpers>
+		<blocks>
+			<delightexport>
+				<class>Delight_Delightexport_Block</class>
+			</delightexport>
+		</blocks>
+		<resources>
+			<delightexport_setup>
+				<setup>
+					<module>Delight_Delightexport</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</delightexport_setup>
+			<delightexport_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</delightexport_write>
+			<delightexport_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</delightexport_read>
+		</resources>
+	</global>
+
+	<adminhtml>
+		<menu>
+			<promo>
+				<children>
+					<delightexport translate="title" module="delightexport">
+						<title>Delight-Export</title>
+						<sort_order>90</sort_order>
+						<children>
+							<create translate="title" module="delightexport">
+								<title>Manage and Create</title>
+								<sort_order>10</sort_order>
+								<action>delightexport/files</action>
+							</create>
+							<list translate="title" module="delightexport">
+								<title>List created Files</title>
+								<sort_order>20</sort_order>
+								<action>delightexport/list</action>
+							</list>
+						</children>
+					</delightexport>
+				</children>
+			</promo>
+		</menu>
+		
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<promo>
+							<children>
+								<delightexport translate="title" module="delightexport">
+									<title>Delight-Export</title>
+									<sort_order>90</sort_order>
+									<children>
+										<create translate="title" module="delightexport">
+											<title>Manage and Create</title>
+											<sort_order>10</sort_order>
+											<action>delightexport/files</action>
+										</create>
+										<list translate="title" module="delightexport">
+											<title>List created Files</title>
+											<sort_order>20</sort_order>
+											<action>delightexport/list</action>
+										</list>
+									</children>
+								</delightexport>
+							</children>
+						</promo>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		
+		<layout>
+			<updates>
+				<delightexport>
+					<file>delightexport.xml</file>
+				</delightexport>
+			</updates>
+		</layout>
+		
+		<routers>
+			<Delight_Delightexport>
+				<use>admin</use>
+				<args>
+					<module>Delight_Delightexport</module>
+					<frontName>delightexport</frontName>
+				</args>
+			</Delight_Delightexport>
+		</routers>
+		
+		<translate>
+			<modules>
+				<Delight_Delightexport>
+					<files>
+						<default>Delight_Delightexport.csv</default>
+					</files>
+				</Delight_Delightexport>
+			</modules>
+		</translate>
+	</adminhtml>
+
+	<admin>
+		<routers>
+			<Delight_Delightexport>
+				<use>admin</use>
+				<args>
+					<module>Delight_Delightexport</module>
+					<frontName>delightexport</frontName>
+				</args>
+			</Delight_Delightexport>
+			<adminhtml>
+				<use>admin</use>
+				<args>
+					<module>Mage_Adminhtml</module>
+					<frontName>admin</frontName>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+	
+</config>
